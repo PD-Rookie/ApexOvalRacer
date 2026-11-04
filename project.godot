@@ -9,11 +9,11 @@ config_version=5
 [application]
 
 config/name="Apex Oval Racer"
-config/description="Arcade 3D oval racer with keyboard, gamepad and touch controls. Built for Godot 4.4+ Compatibility renderer (WebGL2 / OpenGL ES 3)."
+config/description="Arcade 3D oval racer with keyboard, gamepad and touch controls. Built for Godot 4.7+ Compatibility renderer (WebGL2 / OpenGL ES 3)."
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
-config/version="1.0.8"
+config/version="1.1.0"
 
 [display]
 

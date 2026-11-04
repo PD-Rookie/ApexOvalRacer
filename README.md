@@ -1,6 +1,6 @@
 # Apex Oval Racer
 
-A self-contained 3D arcade racer made with **Godot 4.4+**. It uses a
+A self-contained 3D arcade racer made with **Godot 4.7.2+**. It uses a
 `VehicleBody3D` car, a procedurally built circuit with long straights, hills and
 banked corners, four AI rivals, a live leaderboard, sequential checkpoints, lap
 timing, a saved best lap, chase camera, and keyboard/gamepad/touch controls.
@@ -12,7 +12,7 @@ WebGL2 on the web and OpenGL ES 3 on mobile.
 
 ## Quick start
 
-1. Install Godot 4.4 or newer (standard build, not .NET).
+1. Install Godot 4.7.2 or newer (standard build, not .NET).
 2. Open `project.godot` in the Godot project manager.
 3. Press **F5**. The countdown starts automatically.
 
