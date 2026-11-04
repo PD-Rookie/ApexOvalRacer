@@ -1,0 +1,11 @@
+.godot/
+build/
+*.apk
+*.aab
+*.idsig
+*.keystore
+*.jks
+*.p12
+.env
+.DS_Store
+Thumbs.db
