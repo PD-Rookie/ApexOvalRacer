@@ -1,0 +1,191 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/car_controller.gd" id="1_car"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chassis"]
+size = Vector3(1.7, 0.5, 3.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.89, 0.13, 0.16, 1)
+metallic = 0.25
+roughness = 0.32
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+size = Vector3(1.8, 0.5, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dark"]
+albedo_color = Color(0.06, 0.07, 0.09, 1)
+metallic = 0.35
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glass"]
+albedo_color = Color(0.08, 0.15, 0.21, 1)
+metallic = 0.6
+roughness = 0.12
+
+[sub_resource type="BoxMesh" id="BoxMesh_cabin"]
+material = SubResource("StandardMaterial3D_glass")
+size = Vector3(1.48, 0.44, 1.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_splitter"]
+material = SubResource("StandardMaterial3D_dark")
+size = Vector3(1.72, 0.08, 0.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_spoiler"]
+material = SubResource("StandardMaterial3D_dark")
+size = Vector3(1.72, 0.07, 0.38)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_headlight"]
+albedo_color = Color(1, 0.96, 0.82, 1)
+emission_enabled = true
+emission = Color(1, 0.94, 0.72, 1)
+emission_energy_multiplier = 2.5
+roughness = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_headlight"]
+material = SubResource("StandardMaterial3D_headlight")
+size = Vector3(0.38, 0.13, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_taillight"]
+albedo_color = Color(0.75, 0.04, 0.05, 1)
+emission_enabled = true
+emission = Color(1, 0.06, 0.04, 1)
+emission_energy_multiplier = 2
+roughness = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_taillight"]
+material = SubResource("StandardMaterial3D_taillight")
+size = Vector3(0.38, 0.13, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tire"]
+albedo_color = Color(0.045, 0.048, 0.055, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+material = SubResource("StandardMaterial3D_tire")
+top_radius = 0.34
+bottom_radius = 0.34
+height = 0.28
+radial_segments = 16
+rings = 1
+
+[node name="Car" type="VehicleBody3D" groups=["player_car"]]
+collision_layer = 1
+collision_mask = 14
+mass = 320.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.18, 0)
+can_sleep = false
+freeze = true
+script = ExtResource("1_car")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.18, 0)
+shape = SubResource("BoxShape3D_chassis")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.18, 0)
+mesh = SubResource("BoxMesh_body")
+
+[node name="Cabin" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.6, -0.25)
+mesh = SubResource("BoxMesh_cabin")
+
+[node name="FrontSplitter" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.02, 1.92)
+mesh = SubResource("BoxMesh_splitter")
+
+[node name="RearSpoiler" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.7, -1.93)
+rotation_degrees = Vector3(-8, 0, 0)
+mesh = SubResource("BoxMesh_spoiler")
+
+[node name="HeadlightL" type="MeshInstance3D" parent="."]
+position = Vector3(0.55, 0.22, 2.01)
+mesh = SubResource("BoxMesh_headlight")
+
+[node name="HeadlightR" type="MeshInstance3D" parent="."]
+position = Vector3(-0.55, 0.22, 2.01)
+mesh = SubResource("BoxMesh_headlight")
+
+[node name="TaillightL" type="MeshInstance3D" parent="."]
+position = Vector3(0.55, 0.26, -2.01)
+mesh = SubResource("BoxMesh_taillight")
+
+[node name="TaillightR" type="MeshInstance3D" parent="."]
+position = Vector3(-0.55, 0.26, -2.01)
+mesh = SubResource("BoxMesh_taillight")
+
+[node name="WheelFL" type="VehicleWheel3D" parent="."]
+position = Vector3(0.82, -0.12, 1.25)
+use_as_steering = true
+wheel_roll_influence = 0.4
+wheel_radius = 0.34
+wheel_rest_length = 0.18
+wheel_friction_slip = 1.8
+suspension_travel = 0.22
+suspension_stiffness = 45.0
+suspension_max_force = 7000.0
+damping_compression = 0.55
+damping_relaxation = 0.85
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFL"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelFR" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.82, -0.12, 1.25)
+use_as_steering = true
+wheel_roll_influence = 0.4
+wheel_radius = 0.34
+wheel_rest_length = 0.18
+wheel_friction_slip = 1.8
+suspension_travel = 0.22
+suspension_stiffness = 45.0
+suspension_max_force = 7000.0
+damping_compression = 0.55
+damping_relaxation = 0.85
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFR"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelRL" type="VehicleWheel3D" parent="."]
+position = Vector3(0.82, -0.12, -1.25)
+use_as_traction = true
+wheel_roll_influence = 0.4
+wheel_radius = 0.34
+wheel_rest_length = 0.18
+wheel_friction_slip = 1.6
+suspension_travel = 0.22
+suspension_stiffness = 45.0
+suspension_max_force = 7000.0
+damping_compression = 0.55
+damping_relaxation = 0.85
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelRL"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelRR" type="VehicleWheel3D" parent="."]
+position = Vector3(-0.82, -0.12, -1.25)
+use_as_traction = true
+wheel_roll_influence = 0.4
+wheel_radius = 0.34
+wheel_rest_length = 0.18
+wheel_friction_slip = 1.6
+suspension_travel = 0.22
+suspension_stiffness = 45.0
+suspension_max_force = 7000.0
+damping_compression = 0.55
+damping_relaxation = 0.85
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelRR"]
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="GroundRay" type="RayCast3D" parent="."]
+position = Vector3(0, -0.45, 0)
+target_position = Vector3(0, -1.1, 0)
+collision_mask = 6

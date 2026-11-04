@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/track_builder.gd" id="2_track"]
+[ext_resource type="PackedScene" path="res://scenes/car.tscn" id="3_car"]
+[ext_resource type="Script" path="res://scripts/chase_camera.gd" id="4_camera"]
+[ext_resource type="Script" path="res://scripts/lap_manager.gd" id="5_lap"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/touch_hud.gd" id="7_touch"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-48, -35, 0)
+light_energy = 1.15
+shadow_enabled = true
+directional_shadow_max_distance = 160.0
+
+[node name="Track" type="Node3D" parent="."]
+script = ExtResource("2_track")
+
+[node name="Car" parent="." instance=ExtResource("3_car")]
+
+[node name="LapManager" type="Node" parent="."]
+script = ExtResource("5_lap")
+
+[node name="ChaseCamera" type="Camera3D" parent="."]
+current = true
+fov = 68.0
+near = 0.1
+far = 700.0
+script = ExtResource("4_camera")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 20
+script = ExtResource("6_hud")
+
+[node name="TouchHUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Overlay" type="Control" parent="TouchHUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_touch")
